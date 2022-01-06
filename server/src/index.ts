@@ -36,20 +36,23 @@ import { sendRefreshToken } from './sendRefreshToken';
     }
     //token is vallid and can send back access token
     const user = await User.findOne({ id: payload.userId });
+
+    //check if user exists
     if(!user) {
       return res.send({ ok: false, accessToken: '' })
     }
+    if(user.tokenVersion !== payload.tokenVersion) {
+      return res.send({ ok: false, accessToken: '' })
+    }
+    //if user exists
     //create new refresh token
     sendRefreshToken(res, createRefreshToken(user));
     //return access token
     return res.send({ ok: true, accessToken: createAccessToken(user) })
 
   });
-
   // console.log(process.env.ACCESS_TOKEN_SECRET);
   // console.log(process.env.REFRESH_TOKEN_SECRET);
-
-
   await createConnection();
 
   //apollo server
@@ -60,9 +63,11 @@ import { sendRefreshToken } from './sendRefreshToken';
     context: ({ req, res }) => ({ req, res })
   });
   await apolloServer.start();
+
+  //apply middleware to apollo server
   apolloServer.applyMiddleware({ app });
 
-  //port
+  //listening port
   app.listen(4000, () => {
     console.log("express server started")
   });
