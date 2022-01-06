@@ -6,7 +6,7 @@
    "password": "test",
    "database": "jwt_auth_example",
    "synchronize": true,
-   "logging": true,
+   "logging": false,
    "entities": [
       "src/entity/**/*.ts"
    ],
