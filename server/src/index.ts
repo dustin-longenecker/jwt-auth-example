@@ -1,4 +1,4 @@
-import { createAccessToken } from './auth';
+import { createAccessToken, createRefreshToken } from './auth';
 import 'dotenv/config';
 import "reflect-metadata";
 // import {createConnection} from "typeorm";
@@ -11,6 +11,7 @@ import { createConnection } from "typeorm";
 import cookieParser from 'cookie-parser'; 
 import { verify } from 'jsonwebtoken';
 import { User } from './entity/User';
+import { sendRefreshToken } from './sendRefreshToken';
 
 (async () => {
   const app = express();
@@ -37,8 +38,10 @@ import { User } from './entity/User';
     const user = await User.findOne({ id: payload.userId });
     if(!user) {
       return res.send({ ok: false, accessToken: '' })
-
     }
+    //create new refresh token
+    sendRefreshToken(res, createRefreshToken(user));
+    //return access token
     return res.send({ ok: true, accessToken: createAccessToken(user) })
 
   });
