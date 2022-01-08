@@ -4,6 +4,6 @@ interface Props {
 
 }
 
-export const Home = (): JSX.Element => {
+export const Home: React.FC<Props> = () => {
     return <div>Home Page</div>
 }
