@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../generated/graphql';
+import { setAccessToken } from '../accessToken';
 
 interface Props {
 
@@ -24,6 +25,10 @@ export const Login: React.FC = () => {
             }
         })
         console.log(response);
+        if (response && response.data) {
+            // eslint-disable-next-line @typescript-eslint/no-unused-vars
+            setAccessToken(response.data.login.accessToken);
+        }
         //return to homepage
         navigate('/');
     }}>
