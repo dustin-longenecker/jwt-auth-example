@@ -10,12 +10,21 @@ import { UserResolver } from './UserResolver';
 import { createConnection } from "typeorm";
 import cookieParser from 'cookie-parser'; 
 import { verify } from 'jsonwebtoken';
+import cors from 'cors';
 import { User } from './entity/User';
 import { sendRefreshToken } from './sendRefreshToken';
+
 
 (async () => {
   const app = express();
   app.use(cookieParser());
+  //cors
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+      credentials: true
+    })
+  );
 
   //req / res at '/'
   app.get('/', (_req, res) => res.send('hello'));
@@ -65,7 +74,7 @@ import { sendRefreshToken } from './sendRefreshToken';
   await apolloServer.start();
 
   //apply middleware to apollo server
-  apolloServer.applyMiddleware({ app });
+  apolloServer.applyMiddleware({ app, cors: false });
 
   //listening port
   app.listen(4000, () => {
