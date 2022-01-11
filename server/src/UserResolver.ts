@@ -56,6 +56,13 @@ export class UserResolver {
     }
   }
   
+  //logout
+  @Mutation(() => Boolean)
+  async logout(@Ctx() { res }: MyContext) {
+    sendRefreshToken(res, ';')
+    return true;
+  }
+
   //revoke access token
   @Mutation(() => Boolean)
   async revokeRefreshTokensForUser(
