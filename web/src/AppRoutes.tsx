@@ -1,6 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, Link} from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
+import { Header } from './Header';
 import { Bye } from './pages/Bye';
 import { Home } from './pages/Home';
 import { Login } from './pages/Login';
@@ -21,29 +22,15 @@ function AppRoutes() {
     // </div>
     <BrowserRouter>
     <div>
-      <header>
-      <div>
-          <Link to='/'>Home</Link>
-        </div>
-        <div>
-          <Link to='/register'>Register</Link>
-        </div>
-        <div>
-          <Link to='/login'>Login</Link>
-        </div>
-        <div>
-          <Link to='/bye'>Logout </Link>
-        </div>
-      </header>
-    </div>
+      <Header />
       <Routes>
         <Route path='/' element={< Home /> } />
         <Route path='/register' element={< Register />} />
         <Route path='/login' element={< Login />} />
         <Route path='/bye' element={< Bye />} />
-
-
       </Routes>
+    </div>
+
     </BrowserRouter>
 
   );

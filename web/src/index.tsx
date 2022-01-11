@@ -43,6 +43,7 @@ const requestLink = new ApolloLink(
     })
 );
 
+
 const client = new ApolloClient({
   link: ApolloLink.from([
     new TokenRefreshLink ({
@@ -66,7 +67,7 @@ const client = new ApolloClient({
         }
       },
       fetchAccessToken: () => {
-        return fetch("http://localhost:4000/refresh_token", {
+        return fetch('http://localhost:4000/refresh_token', {
           method: "POST",
           credentials: "include"
         });
@@ -85,8 +86,8 @@ const client = new ApolloClient({
     }),
     requestLink,
     new HttpLink({
-      uri: "http://localhost:4000/graphql",
-      credentials: "include"
+      uri: 'http://localhost:4000/graphql',
+      credentials: 'include'
     })
   ]),
   cache
